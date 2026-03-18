@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EGG — Explore. Grow. Go.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#F5F0E8;--cream-2:#EDE7DA;--cream-3:#E3DBCC;
+  --forest:#1B3228;--forest-2:#2A4D3C;--forest-3:#3D6B52;--forest-4:#5C8F73;
+  --gold:#B07D28;--gold-2:#C9952E;--gold-3:#E8B84B;--gold-pale:#F5E8CC;
+  --ink:#18180F;--ink-2:#3C3C30;--ink-3:#6B6B58;--ink-4:#9A9A83;--ink-5:#C4C4AF;
+  --white:#FFFEF9;
+  --r-xs:4px;--r-sm:8px;--r-md:14px;--r-lg:22px;--r-xl:32px;
+  --ease:cubic-bezier(.4,0,.2,1);
+  --t:.22s;
+  --sidebar-w:260px;
+  --doc-w:300px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* ───── TOPBAR ───── */
+.topbar{
+  height:56px;background:var(--forest);display:flex;align-items:center;
+  padding:0 2rem;gap:0;position:sticky;top:0;z-index:200;
+  border-bottom:1px solid rgba(255,255,255,.06)
+}
+.topbar-logo{
+  font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:600;
+  letter-spacing:.1em;color:var(--white);text-decoration:none;
+  display:flex;align-items:baseline;gap:0;margin-right:2.5rem;flex-shrink:0
+}
+.topbar-logo sup{
+  font-family:'DM Sans',sans-serif;font-size:.55rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--gold-3);margin-left:7px;font-weight:400;
+  align-self:center;opacity:.85
+}
+.tabs-nav{display:flex;align-items:stretch;height:56px;gap:0;flex:1}
+.tab-btn{
+  position:relative;display:flex;align-items:center;gap:8px;
+  padding:0 1.4rem;font-size:.78rem;letter-spacing:.07em;text-transform:uppercase;
+  font-weight:400;color:rgba(255,255,255,.45);background:none;border:none;
+  cursor:pointer;transition:color var(--t) var(--ease);white-space:nowrap;
+  font-family:'DM Sans',sans-serif
+}
+.tab-btn::after{
+  content:'';position:absolute;bottom:0;left:1.4rem;right:1.4rem;height:2px;
+  background:var(--gold-3);border-radius:2px 2px 0 0;opacity:0;
+  transform:scaleX(.4);transition:opacity var(--t) var(--ease),transform var(--t) var(--ease)
+}
+.tab-btn:hover{color:rgba(255,255,255,.75)}
+.tab-btn.active{color:var(--white);font-weight:500}
+.tab-btn.active::after{opacity:1;transform:scaleX(1)}
+.tab-badge{
+  font-size:.58rem;letter-spacing:.1em;background:var(--gold);color:var(--forest);
+  border-radius:100px;padding:2px 7px;font-weight:600;opacity:.9
+}
+.topbar-coach{
+  margin-left:auto;flex-shrink:0;
+  display:flex;align-items:center;gap:8px;
+  font-size:.75rem;letter-spacing:.05em;color:rgba(255,255,255,.55);
+  border:1px solid rgba(255,255,255,.15);border-radius:100px;
+  padding:6px 16px;cursor:pointer;transition:all var(--t) var(--ease)
+}
+.topbar-coach:hover{border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.9)}
+.topbar-coach-dot{width:6px;height:6px;border-radius:50%;background:#5FD17A;flex-shrink:0}
+
+/* ───── TAB PANELS ───── */
+.tab-panel{display:none;animation:fadeIn .2s var(--ease)}
+.tab-panel.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══════════════════════════════════
+   TAB 1 — LANDING
+══════════════════════════════════ */
+.hero{
+  max-width:1100px;margin:0 auto;
+  padding:6rem 2.5rem 5rem;
+  display:grid;grid-template-columns:1fr 420px;gap:5rem;align-items:center
+}
+.hero-eyebrow{
+  display:flex;align-items:center;gap:10px;margin-bottom:1.4rem;
+  font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:500
+}
+.hero-eyebrow-line{width:28px;height:1px;background:var(--gold)}
+.hero-h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.8rem,4.5vw,4.2rem);font-weight:400;line-height:1.05;
+  color:var(--forest);letter-spacing:-.015em;margin-bottom:1.6rem
+}
+.hero-h1 em{font-style:italic;color:var(--forest-3)}
+.hero-body{font-size:.97rem;color:var(--ink-3);line-height:1.8;max-width:430px;margin-bottom:2.5rem}
+.hero-acts{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.btn-cta{
+  font-size:.82rem;letter-spacing:.05em;font-weight:500;
+  color:var(--white);background:var(--forest);
+  padding:12px 26px;border-radius:100px;text-decoration:none;
+  border:none;cursor:pointer;transition:all var(--t) var(--ease);
+  font-family:'DM Sans',sans-serif
+}
+.btn-cta:hover{background:var(--forest-2);transform:translateY(-1px);box-shadow:0 8px 30px rgba(27,50,40,.18)}
+.btn-ghost{
+  font-size:.82rem;color:var(--forest);text-decoration:none;
+  display:flex;align-items:center;gap:5px;transition:gap var(--t) var(--ease)
+}
+.btn-ghost:hover{gap:9px}
+.btn-ghost::after{content:'→'}
+
+/* egg visual */
+.egg-vis{display:flex;justify-content:center;align-items:center}
+.egg{
+  width:260px;height:320px;
+  background:var(--forest);
+  border-radius:50% 50% 50% 50% / 58% 58% 42% 42%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.1rem;
+  position:relative;overflow:hidden
+}
+.egg::before{
+  content:'';position:absolute;top:-25%;left:-5%;width:65%;height:65%;
+  background:radial-gradient(ellipse,rgba(232,184,75,.08) 0%,transparent 70%);pointer-events:none
+}
+.egg-w{
+  font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:300;
+  color:rgba(255,255,255,.9);letter-spacing:.2em;text-transform:uppercase;
+  display:flex;align-items:center;gap:9px;position:relative;z-index:1
+}
+.egg-w .d{width:4px;height:4px;border-radius:50%;background:var(--gold-3);flex-shrink:0;animation:p 2.4s ease-in-out infinite}
+.egg-w:nth-child(2){opacity:.65;animation-delay:.2s}
+.egg-w:nth-child(3){opacity:.4;animation-delay:.4s}
+@keyframes p{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* propositions */
+.props{background:var(--forest);padding:4rem 2.5rem}
+.props-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.prop{padding:1.75rem;border:1px solid rgba(255,255,255,.07);border-radius:var(--r-md)}
+.prop-num{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:rgba(255,255,255,.12);line-height:1;margin-bottom:.8rem}
+.prop-title{font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;color:var(--gold-3);margin-bottom:.6rem}
+.prop-text{font-size:.88rem;color:rgba(255,255,255,.45);line-height:1.7}
+
+/* principles */
+.principles{max-width:1100px;margin:0 auto;padding:5rem 2.5rem}
+.sec-eyebrow{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:.9rem}
+.sec-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,2.8vw,2.5rem);font-weight:400;color:var(--forest);line-height:1.2;margin-bottom:1rem}
+.sec-sub{font-size:.9rem;color:var(--ink-3);max-width:520px;line-height:1.75;margin-bottom:3rem}
+.principles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1.5rem}
+.principle-card{background:var(--white);border:1px solid rgba(27,50,40,.07);border-radius:var(--r-md);padding:1.4rem}
+.principle-icon{font-size:1.4rem;margin-bottom:.8rem}
+.principle-title{font-size:.85rem;font-weight:500;color:var(--forest);margin-bottom:.4rem}
+.principle-text{font-size:.82rem;color:var(--ink-3);line-height:1.65}
+
+/* ethics band */
+.ethics-band{background:var(--cream-2);border-top:1px solid rgba(27,50,40,.07);border-bottom:1px solid rgba(27,50,40,.07);padding:2.5rem 2.5rem}
+.ethics-band-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.ethics-band h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--forest);margin-bottom:.3rem}
+.ethics-band p{font-size:.85rem;color:var(--ink-3);max-width:500px}
+.ethics-items{display:flex;gap:1rem;flex-wrap:wrap;align-items:center}
+.ethics-tag{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--forest-3);border:1px solid rgba(27,50,40,.15);border-radius:100px;padding:4px 12px}
+
+/* landing footer */
+.land-footer{background:var(--forest);padding:3rem 2.5rem 2rem}
+.land-footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:2rem;margin-bottom:2.5rem}
+.lf-brand .logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:500;color:var(--white);letter-spacing:.08em}
+.lf-brand .sub{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:.3rem}
+.lf-brand .desc{font-size:.8rem;color:rgba(255,255,255,.3);margin-top:.7rem;max-width:260px;line-height:1.6}
+.lf-links h4{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;font-weight:500;color:rgba(255,255,255,.3);margin-bottom:.9rem}
+.lf-links ul{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.lf-links a{font-size:.8rem;color:rgba(255,255,255,.45);text-decoration:none;transition:color var(--t) var(--ease)}
+.lf-links a:hover{color:rgba(255,255,255,.85)}
+.land-footer-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:1.5rem;max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem}
+.lf-note{font-size:.68rem;color:rgba(255,255,255,.2)}
+.icf-pill{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.28);border:1px solid rgba(255,255,255,.1);padding:3px 10px;border-radius:100px}
+
+/* ══════════════════════════════════
+   TAB 2 — AGENTS WORKSPACE
+══════════════════════════════════ */
+.workspace{
+  display:grid;
+  grid-template-columns:var(--sidebar-w) 1fr var(--doc-w);
+  height:calc(100vh - 56px);
+  overflow:hidden
+}
+.workspace.doc-closed{grid-template-columns:var(--sidebar-w) 1fr 0}
+
+/* SIDEBAR */
+.sidebar{
+  background:var(--white);border-right:1px solid rgba(27,50,40,.09);
+  display:flex;flex-direction:column;overflow:hidden
+}
+.sidebar-head{
+  padding:1.1rem 1.25rem .9rem;border-bottom:1px solid rgba(27,50,40,.07);flex-shrink:0
+}
+.sidebar-head-title{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-4);font-weight:500}
+.agent-list{flex:1;overflow-y:auto;padding:.5rem 0}
+.agent-list::-webkit-scrollbar{width:3px}
+.agent-list::-webkit-scrollbar-thumb{background:var(--cream-3);border-radius:2px}
+
+.agent-item{
+  display:flex;align-items:center;gap:10px;padding:.65rem 1.25rem;
+  cursor:pointer;transition:background var(--t) var(--ease);position:relative;border-radius:0
+}
+.agent-item:hover{background:var(--cream)}
+.agent-item.active{background:var(--cream-2)}
+.agent-item.active::before{content:'';position:absolute;left:0;top:20%;bottom:20%;width:2.5px;background:var(--forest);border-radius:0 2px 2px 0}
+.agent-item-icon{font-size:1.1rem;flex-shrink:0;line-height:1;width:28px;text-align:center}
+.agent-item-info{flex:1;min-width:0}
+.agent-item-name{font-size:.82rem;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.agent-item-verb{font-size:.7rem;color:var(--ink-4);margin-top:1px}
+.agent-item-pill{
+  font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;
+  padding:2px 8px;border-radius:100px;flex-shrink:0
+}
+.pill-active{background:rgba(27,50,40,.08);color:var(--forest-3)}
+.pill-soon{background:rgba(155,155,130,.1);color:var(--ink-4)}
+
+.divider-label{
+  padding:.5rem 1.25rem .3rem;font-size:.6rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--ink-5);font-weight:500
+}
+
+/* MAIN CHAT AREA */
+.chat-area{
+  display:flex;flex-direction:column;background:var(--cream);overflow:hidden
+}
+.chat-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.9rem 1.4rem;border-bottom:1px solid rgba(27,50,40,.09);
+  background:var(--white);flex-shrink:0
+}
+.chat-header-left{display:flex;align-items:center;gap:12px}
+.chat-agent-icon{font-size:1.4rem;line-height:1}
+.chat-agent-name{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:500;color:var(--forest)}
+.chat-agent-desc{font-size:.75rem;color:var(--ink-4);margin-top:1px}
+.chat-header-right{display:flex;align-items:center;gap:.6rem}
+.icon-btn{
+  width:32px;height:32px;border-radius:var(--r-sm);background:none;
+  border:1px solid rgba(27,50,40,.1);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:.8rem;color:var(--ink-3);transition:all var(--t) var(--ease)
+}
+.icon-btn:hover{background:var(--cream-2);border-color:rgba(27,50,40,.2);color:var(--ink)}
+.icon-btn.active-btn{background:var(--forest);border-color:var(--forest);color:var(--white)}
+
+.chat-main{flex:1;overflow:hidden;position:relative}
+
+/* IFRAME / PLACEHOLDER states */
+.iframe-wrap{width:100%;height:100%;position:relative}
+.iframe-wrap iframe{width:100%;height:100%;border:none;display:block}
+
+.placeholder{
+  width:100%;height:100%;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:1.25rem;
+  padding:3rem;text-align:center
+}
+.placeholder-icon{font-size:3rem;opacity:.4}
+.placeholder-title{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:400;color:var(--forest);opacity:.5}
+.placeholder-text{font-size:.85rem;color:var(--ink-4);max-width:320px;line-height:1.65}
+.placeholder-tag{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(27,50,40,.1);border-radius:100px;padding:6px 16px;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-4)}
+
+.chat-footer{
+  padding:.65rem 1rem;border-top:1px solid rgba(27,50,40,.07);
+  background:var(--white);flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem
+}
+.chat-footer-ethics{display:flex;align-items:center;gap:7px;font-size:.68rem;color:var(--ink-5)}
+.live-dot{width:5px;height:5px;border-radius:50%;background:var(--forest-3);animation:p 3s ease-in-out infinite}
+.chat-footer-link{font-size:.68rem;color:var(--forest-3);text-decoration:none;letter-spacing:.04em;transition:color var(--t)}
+.chat-footer-link:hover{color:var(--forest)}
+
+/* DOC PANEL */
+.doc-panel{
+  background:var(--white);border-left:1px solid rgba(27,50,40,.09);
+  display:flex;flex-direction:column;overflow:hidden;
+  transition:width var(--t) var(--ease)
+}
+.doc-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.9rem 1.1rem;border-bottom:1px solid rgba(27,50,40,.07);flex-shrink:0
+}
+.doc-head-title{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-4);font-weight:500}
+.doc-list{flex:1;overflow-y:auto;padding:.6rem}
+.doc-list::-webkit-scrollbar{width:3px}
+.doc-list::-webkit-scrollbar-thumb{background:var(--cream-3);border-radius:2px}
+.doc-cat{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-5);padding:.5rem .4rem .2rem;font-weight:500}
+.doc-file{
+  display:flex;align-items:center;gap:10px;padding:.7rem .7rem;
+  border-radius:var(--r-sm);cursor:pointer;transition:background var(--t) var(--ease)
+}
+.doc-file:hover{background:var(--cream)}
+.doc-file-icon{
+  width:30px;height:36px;border-radius:var(--r-xs);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.7rem;font-weight:600;letter-spacing:.04em;flex-shrink:0
+}
+.doc-file-icon.pdf{background:rgba(176,58,40,.09);color:#B03A28}
+.doc-file-icon.art{background:rgba(27,50,40,.07);color:var(--forest-2)}
+.doc-file-icon.ref{background:rgba(176,125,40,.1);color:var(--gold)}
+.doc-file-name{font-size:.78rem;color:var(--ink-2);line-height:1.3;font-weight:400}
+.doc-file-meta{font-size:.65rem;color:var(--ink-4);margin-top:2px}
+.doc-divider{height:1px;background:rgba(27,50,40,.05);margin:.4rem 0}
+
+.agent-info-box{
+  margin:.8rem .6rem;padding:1rem;border-radius:var(--r-md);
+  background:var(--cream);border:1px solid rgba(27,50,40,.07)
+}
+.aib-label{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:.5rem}
+.aib-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:500;color:var(--forest);margin-bottom:.4rem}
+.aib-text{font-size:.75rem;color:var(--ink-3);line-height:1.6}
+.aib-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:.7rem}
+.aib-tag{font-size:.62rem;background:rgba(27,50,40,.06);color:var(--forest-3);border-radius:100px;padding:3px 9px}
+
+.doc-footer{padding:.8rem;border-top:1px solid rgba(27,50,40,.07);flex-shrink:0}
+.doc-footer p{font-size:.68rem;color:var(--ink-5);text-align:center;line-height:1.5}
+
+/* ══════════════════════════════════
+   TAB 3 — PROFESSIONNELS
+══════════════════════════════════ */
+.pro-page{overflow-y:auto;max-height:calc(100vh - 56px)}
+.pro-hero{
+  background:var(--forest);padding:6rem 2.5rem 5rem;
+  position:relative;overflow:hidden
+}
+.pro-hero::before{
+  content:'';position:absolute;top:-20%;right:-5%;width:50%;height:140%;
+  background:radial-gradient(ellipse,rgba(232,184,75,.07) 0%,transparent 65%);pointer-events:none
+}
+.pro-hero-inner{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 360px;gap:5rem;align-items:center}
+.pro-hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.4rem,4vw,3.5rem);font-weight:400;color:var(--white);line-height:1.1;margin-bottom:1.2rem;letter-spacing:-.01em}
+.pro-hero h1 em{font-style:italic;color:var(--gold-3)}
+.pro-hero p{font-size:.93rem;color:rgba(255,255,255,.5);line-height:1.8;max-width:420px;margin-bottom:2rem}
+.pro-acts{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.btn-cta-inv{
+  font-size:.82rem;font-weight:500;color:var(--forest);background:var(--gold-3);
+  padding:12px 26px;border-radius:100px;text-decoration:none;border:none;cursor:pointer;
+  transition:all var(--t) var(--ease);font-family:'DM Sans',sans-serif
+}
+.btn-cta-inv:hover{background:var(--gold-2);transform:translateY(-1px)}
+.btn-ghost-w{font-size:.82rem;color:rgba(255,255,255,.55);text-decoration:none;display:flex;align-items:center;gap:5px;transition:all var(--t) var(--ease)}
+.btn-ghost-w:hover{color:rgba(255,255,255,.9);gap:9px}
+.btn-ghost-w::after{content:'→'}
+
+.pro-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);
+  border-radius:var(--r-lg);padding:2rem
+}
+.pro-card h3{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;color:rgba(255,255,255,.85);margin-bottom:1rem}
+.pro-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.pro-stat{background:rgba(255,255,255,.03);border-radius:var(--r-md);padding:1rem;border:1px solid rgba(255,255,255,.05)}
+.pro-stat-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--gold-3);line-height:1}
+.pro-stat-label{font-size:.72rem;color:rgba(255,255,255,.35);margin-top:.3rem;letter-spacing:.04em}
+
+.pro-sections{max-width:1000px;margin:0 auto;padding:5rem 2.5rem}
+.pro-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:3rem}
+.pro-block{background:var(--white);border:1px solid rgba(27,50,40,.08);border-radius:var(--r-lg);padding:2rem;transition:all var(--t) var(--ease)}
+.pro-block:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(27,50,40,.1)}
+.pro-block-icon{font-size:1.8rem;margin-bottom:1rem}
+.pro-block-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:500;color:var(--forest);margin-bottom:.6rem}
+.pro-block-text{font-size:.85rem;color:var(--ink-3);line-height:1.7;margin-bottom:1.4rem}
+.pro-block-link{font-size:.78rem;font-weight:500;color:var(--forest-3);text-decoration:none;display:flex;align-items:center;gap:5px;transition:gap var(--t) var(--ease)}
+.pro-block-link:hover{gap:9px}
+.pro-block-link::after{content:'→'}
+
+.qualify-section{background:var(--forest);padding:5rem 2.5rem}
+.qualify-inner{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 380px;gap:4rem;align-items:center}
+.qualify-inner h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.5rem);font-weight:400;color:var(--white);line-height:1.2;margin-bottom:1rem}
+.qualify-inner p{font-size:.9rem;color:rgba(255,255,255,.45);line-height:1.7}
+.qualify-form{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-lg);padding:1.8rem}
+.qualify-form h3{font-size:.82rem;font-weight:500;color:rgba(255,255,255,.7);letter-spacing:.06em;text-transform:uppercase;margin-bottom:1.2rem}
+.form-field{margin-bottom:1rem}
+.form-field label{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.35);display:block;margin-bottom:.4rem;font-weight:500}
+.form-field input,.form-field select,.form-field textarea{
+  width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--r-sm);padding:.6rem .9rem;font-size:.83rem;
+  color:rgba(255,255,255,.8);font-family:'DM Sans',sans-serif;
+  transition:border-color var(--t) var(--ease);resize:vertical
+}
+.form-field input::placeholder,.form-field textarea::placeholder{color:rgba(255,255,255,.2)}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{outline:none;border-color:rgba(255,255,255,.3)}
+.form-field select option{background:var(--forest);color:var(--white)}
+.btn-form{
+  width:100%;padding:11px;background:var(--gold-3);color:var(--forest);
+  border:none;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:.83rem;font-weight:500;
+  cursor:pointer;letter-spacing:.04em;transition:all var(--t) var(--ease);margin-top:.5rem
+}
+.btn-form:hover{background:var(--gold-2);transform:translateY(-1px)}
+
+/* coach section */
+.coach-section{padding:5rem 2.5rem;background:var(--cream-2)}
+.coach-inner{max-width:1000px;margin:0 auto;text-align:center}
+.coach-inner h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.4rem);font-weight:400;color:var(--forest);margin-bottom:.8rem}
+.coach-inner p{font-size:.9rem;color:var(--ink-3);max-width:480px;margin:0 auto 2.5rem;line-height:1.75}
+.coach-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:700px;margin:0 auto}
+.coach-card{background:var(--white);border:1px solid rgba(27,50,40,.08);border-radius:var(--r-md);padding:1.4rem;text-align:center}
+.coach-card-icon{font-size:1.6rem;margin-bottom:.7rem}
+.coach-card-title{font-size:.8rem;font-weight:500;color:var(--forest);margin-bottom:.3rem}
+.coach-card-text{font-size:.75rem;color:var(--ink-4);line-height:1.6}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;gap:3rem;padding:4rem 1.5rem}
+  .egg-vis{order:-1}
+  .props-inner{grid-template-columns:1fr}
+  .workspace{grid-template-columns:var(--sidebar-w) 1fr;height:calc(100vh - 56px)}
+  .doc-panel{display:none}
+  .pro-hero-inner{grid-template-columns:1fr;gap:2.5rem}
+  .pro-grid{grid-template-columns:1fr}
+  .qualify-inner{grid-template-columns:1fr;gap:2.5rem}
+  .coach-cards{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .workspace{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .topbar{padding:0 1rem}
+  .tab-btn{padding:0 .8rem;font-size:.7rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ TOPBAR ═══ -->
+<header class="topbar">
+  <a class="topbar-logo" href="#" onclick="showTab('landing');return false">
+    EGG <sup>Explore · Grow · Go</sup>
+  </a>
+  <nav class="tabs-nav">
+    <button class="tab-btn active" id="tab-landing" onclick="showTab('landing')">
+      <span>La plateforme</span>
+    </button>
+    <button class="tab-btn" id="tab-agents" onclick="showTab('agents')">
+      <span>Agents</span>
+      <span class="tab-badge">11</span>
+    </button>
+    <button class="tab-btn" id="tab-pro" onclick="showTab('pro')">
+      <span>Espace pro</span>
+    </button>
+  </nav>
+  <button class="topbar-coach" onclick="alert('Annuaire des coachs humains — bientôt disponible')">
+    <span class="topbar-coach-dot"></span>
+    Coach humain
+  </button>
+</header>
+
+<!-- ═══════════════════════════════
+     TAB 1 — LANDING
+═══════════════════════════════ -->
+<div class="tab-panel active" id="panel-landing" style="overflow-y:auto;max-height:calc(100vh - 56px)">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div>
+      <p class="hero-eyebrow"><span class="hero-eyebrow-line"></span>Coaching IA · Réflexion · Action</p>
+      <h1 class="hero-h1">Ce que vous vivez,<br>en <em>point de départ</em>.</h1>
+      <p class="hero-body">EGG est un espace de réflexion et d'action accessible à tout moment. Pas de prescription, pas d'injonction. Vous choisissez l'agent, vous menez la réflexion, vous décidez.</p>
+      <div class="hero-acts">
+        <button class="btn-cta" onclick="showTab('agents')">Explorer les agents</button>
+        <a href="#principes" class="btn-ghost">Notre approche</a>
+      </div>
+    </div>
+    <div class="egg-vis">
+      <div class="egg">
+        <span class="egg-w"><span class="d"></span>Explore</span>
+        <span class="egg-w"><span class="d"></span>Grow</span>
+        <span class="egg-w"><span class="d"></span>Go</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Props -->
+  <div class="props">
+    <div class="props-inner">
+      <div class="prop">
+        <div class="prop-num">01</div>
+        <p class="prop-title">Vous choisissez</p>
+        <p class="prop-text">Aucun guidage imposé à l'entrée. Catalogue visible et accessible. Vous entrez par ce que vous vivez, pas par ce qu'on vous prescrit.</p>
+      </div>
+      <div class="prop">
+        <div class="prop-num">02</div>
+        <p class="prop-title">Vous réfléchissez</p>
+        <p class="prop-text">Chaque agent propose une expérience de réflexion activable à la demande, orientée prise de conscience et structuration.</p>
+      </div>
+      <div class="prop">
+        <div class="prop-num">03</div>
+        <p class="prop-title">Vous agissez</p>
+        <p class="prop-text">De la prise de conscience à l'action. Depuis l'intérieur vers l'extérieur. L'IA accompagne — vous décidez.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Principles -->
+  <section class="principles" id="principes">
+    <p class="sec-eyebrow">Fondements</p>
+    <h2 class="sec-h2">Une posture, des principes,<br>un cadre clair</h2>
+    <p class="sec-sub">EGG repose sur des principes issus du coaching professionnel et d'une exigence éthique explicite.</p>
+    <div class="principles-grid">
+      <div class="principle-card">
+        <div class="principle-icon">🔓</div>
+        <p class="principle-title">Liberté de choix</p>
+        <p class="principle-text">Aucun guidage imposé. Catalogue visible. Choix autonome de l'agent et du moment.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">🧭</div>
+        <p class="principle-title">Responsabilisation</p>
+        <p class="principle-text">L'IA n'agit pas à votre place. Vous restez l'auteur de vos choix et de vos décisions.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">⚡</div>
+        <p class="principle-title">Simplicité d'accès</p>
+        <p class="principle-text">Interface épurée, parcours court, accès direct à l'agent. Pas de friction.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">🤝</div>
+        <p class="principle-title">Complémentarité</p>
+        <p class="principle-text">L'IA accompagne. Le coach humain reste accessible à tout moment depuis l'interface.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">🔍</div>
+        <p class="principle-title">Transparence IA</p>
+        <p class="principle-text">Vous savez toujours que vous interagissez avec une IA. Aucune ambiguïté sur la nature de l'agent.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-icon">🛡️</div>
+        <p class="principle-title">Confidentialité</p>
+        <p class="principle-text">Vos échanges sont privés. Votre espace de réflexion vous appartient.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ethics band -->
+  <div class="ethics-band">
+    <div class="ethics-band-inner">
+      <div>
+        <h3>Cadre éthique & déontologique</h3>
+        <p>Posture inspirée des standards ICF. Respect de la personne, absence de jugement, accès à un humain à tout moment.</p>
+      </div>
+      <div class="ethics-items">
+        <span class="ethics-tag">Standards ICF</span>
+        <span class="ethics-tag">Non-directif</span>
+        <span class="ethics-tag">Transparent</span>
+        <span class="ethics-tag">Sans jugement</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="land-footer">
+    <div class="land-footer-inner">
+      <div class="lf-brand">
+        <p class="logo">EGG</p>
+        <p class="sub">Explore · Grow · Go</p>
+        <p class="desc">Depuis l'intérieur vers l'extérieur. Un espace de coaching accessible à tout moment.</p>
+      </div>
+      <div class="lf-links">
+        <h4>Plateforme</h4>
+        <ul>
+          <li><a href="#" onclick="showTab('agents');return false">Catalogue agents</a></li>
+          <li><a href="#" onclick="showTab('pro');return false">Espace pro</a></li>
+          <li><a href="#principes">Notre approche</a></li>
+        </ul>
+      </div>
+      <div class="lf-links">
+        <h4>Éthique</h4>
+        <ul>
+          <li><a href="#">Cadre éthique</a></li>
+          <li><a href="#">Confidentialité</a></li>
+          <li><a href="#">Standards ICF</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="land-footer-bottom">
+      <p class="lf-note">© 2026 EGG Platform — Tous droits réservés</p>
+      <span class="icf-pill">Conforme ICF</span>
+    </div>
+  </footer>
+</div><!-- /landing -->
+
+<!-- ═══════════════════════════════
+     TAB 2 — AGENTS WORKSPACE
+═══════════════════════════════ -->
+<div class="tab-panel" id="panel-agents">
+  <div class="workspace" id="workspace">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-head">
+        <p class="sidebar-head-title">Catalogue d'agents</p>
+      </div>
+      <div class="agent-list">
+        <!-- GROW IO -->
+        <p class="divider-label">Agent central</p>
+        <div class="agent-item active" id="item-grow" onclick="selectAgent('grow')">
+          <span class="agent-item-icon">🌱</span>
+          <div class="agent-item-info">
+            <p class="agent-item-name">GROW IO</p>
+            <p class="agent-item-verb">Coaching réflexif</p>
+          </div>
+          <span class="agent-item-pill pill-active">Actif</span>
+        </div>
+
+        <p class="divider-label" style="margin-top:.5rem">Agents spécialisés</p>
+
+        <div class="agent-item" id="item-comprendre" onclick="selectAgent('comprendre')">
+          <span class="agent-item-icon">🧠</span>
+          <div class="agent-item-info"><p class="agent-item-name">Comprendre</p><p class="agent-item-verb">confusion → compréhension</p></div>
+          <span class="agent-item-pill pill-soon">Bientôt</span>
+        </div>
+        <div class="agent-item" id="item-decider" onclick="selectAgent('decider')">
+          <span class="agent-item-icon">🎯</span>
+          <div class="agent-item-info"><p class="agent-item-name">Décider</p><p class="agent-item-verb">hésitation → décision</p></div>
+          <span class="agent-item-pill pill-soon">Bientôt</span>
+        </div>
+        <div class="agent-item" id="item-agir" onclick="selectAgent('agir')">
+          <span class="agent-item-icon">🚀</span>
+          <div class="agent-item-info"><p class="agent-item-name">Passer à l'action</p><p class="agent-item-verb">intention → action</p></div>
+          <span class="agent-item-pill pill-soon">Bientôt</span>
+        </div>
+        <div class="agent-item" id="item-dire" onclick="selectAgent('dire')">
+          <span class="agent-item-icon">💬</span>
+          <div class="agent-item-info"><p class="agent-item-name">Dire</p><p class="agent-item-verb">évitement → expression</p></div>
+          <span class="agent-item-pill pill-soon">Bientôt</span>
+        </div>
+        <div class="agent-item" id="item-feedback" onclick="selectAgent('feedback')">
+          <span class="agent-item-icon">🗣️</span>
+          <div class="agent-item-info"><p class="agent-item-name">Donner du feedback</p><p class="agent-item-verb">critique → développement</p></div>
+          <span class="agent-item-pill pill-soon">Bientôt</span>
+        </div>
+        <div class="agent-item" id="item-ecouter" onclick="selectAgent('ecouter')">
+          <span class="agent-item-icon">👂</span>
+          <div class="agent-item-info"><p class="agent-item-name">Écouter</p><p class="agent-item-verb">réaction → compréhension</p></div>
+          <span class="agent-item-pill pill-soon">Bientôt</span>
+        </div>
+        <div class="agent-item" id="item-ressentir" onclick="selectAgent('ressentir')">
+          <span class="agent-item-icon">😵</span>
+          <div class="agent-item-info"><p class="agent-item-name">Ce que je ressens</p><p class="agent-item-verb">flou → conscience émotionnelle</p></div>
+          <span class="agent-item-pill pill-soon">Bientôt</span>
+        </div>
+        <div class="agent-item" id="item-stabiliser" onclick="selectAgent('stabiliser')">
+          <span class="agent-item-icon">⚖️</span>
+          <div class="agent-item-info"><p class="agent-item-name">Me stabiliser</p><p class="agent-item-verb">débordement → ajustement</p></div>
+          <span class="agent-item-pill pill-soon">Bientôt</span>
+        </div>
+        <div class="agent-item" id="item-place" onclick="selectAgent('place')">
+          <span class="agent-item-icon">🧭</span>
+          <div class="agent-item-info"><p class="agent-item-name">Prendre ma place</p><p class="agent-item-verb">subir → incarner</p></div>
+          <span class="agent-item-pill pill-soon">Bientôt</span>
+        </div>
+        <div class="agent-item" id="item-convaincre" onclick="selectAgent('convaincre')">
+          <span class="agent-item-icon">🤝</span>
+          <div class="agent-item-info"><p class="agent-item-name">Convaincre</p><p class="agent-item-verb">argumenter → convaincre</p></div>
+          <span class="agent-item-pill pill-soon">Bientôt</span>
+        </div>
+        <div class="agent-item" id="item-equipe" onclick="selectAgent('equipe')">
+          <span class="agent-item-icon">👥</span>
+          <div class="agent-item-info"><p class="agent-item-name">Comprendre une équipe</p><p class="agent-item-verb">individuel → collectif</p></div>
+          <span class="agent-item-pill pill-soon">Bientôt</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CHAT -->
+    <main class="chat-area">
+      <div class="chat-header">
+        <div class="chat-header-left">
+          <span class="chat-agent-icon" id="chat-icon">🌱</span>
+          <div>
+            <p class="chat-agent-name" id="chat-name">GROW IO — Grow Inside Out</p>
+            <p class="chat-agent-desc" id="chat-desc">Agent de coaching réflexif généraliste · Point d'entrée transversal</p>
+          </div>
+        </div>
+        <div class="chat-header-right">
+          <button class="icon-btn" id="btn-doc" title="Documentation" onclick="toggleDoc()" style="font-size:.75rem;letter-spacing:.04em;font-family:'DM Sans',sans-serif;width:auto;padding:0 10px;font-size:.7rem;">
+            Docs ↗
+          </button>
+          <a href="https://www.magif.ai/chat/69ba72de6d08412ae30cf491" target="_blank" id="btn-open" class="icon-btn" title="Ouvrir dans un nouvel onglet" style="text-decoration:none;font-size:.85rem">↗</a>
+        </div>
+      </div>
+
+      <div class="chat-main">
+        <!-- GROW IO iframe (active by default) -->
+        <div class="iframe-wrap" id="chat-grow">
+          <iframe
+            src="https://www.magif.ai/chat/69ba72de6d08412ae30cf491"
+            title="GROW IO"
+            allow="microphone"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-top-navigation"
+          ></iframe>
+        </div>
+        <!-- Placeholder for other agents -->
+        <div class="placeholder" id="chat-placeholder" style="display:none">
+          <div class="placeholder-icon" id="ph-icon">🧠</div>
+          <p class="placeholder-title" id="ph-name">Cet agent</p>
+          <p class="placeholder-text" id="ph-text">Cet agent est en cours de développement et sera disponible prochainement sur la plateforme EGG.</p>
+          <span class="placeholder-tag">⏳ Bientôt disponible</span>
+        </div>
+      </div>
+
+      <div class="chat-footer">
+        <span class="chat-footer-ethics"><span class="live-dot"></span>Espace confidentiel · IA transparente · Posture non-directive</span>
+        <a href="#" class="chat-footer-link" onclick="showTab('landing');return false">Cadre éthique →</a>
+      </div>
+    </main>
+
+    <!-- DOC PANEL -->
+    <aside class="doc-panel" id="doc-panel">
+      <div class="doc-head">
+        <p class="doc-head-title">Documentation</p>
+        <button class="icon-btn" onclick="toggleDoc()" style="font-size:1rem;width:28px;height:28px">×</button>
+      </div>
+      <div class="doc-list" id="doc-list-content">
+        <!-- GROW IO docs (default) -->
+        <div id="docs-grow">
+          <div class="agent-info-box">
+            <p class="aib-label">Agent central</p>
+            <p class="aib-name">GROW IO</p>
+            <p class="aib-text">Coaching réflexif généraliste. Point d'entrée transversal lorsqu'une situation mérite d'être travaillée dans sa globalité.</p>
+            <div class="aib-tags">
+              <span class="aib-tag">Clarifier</span><span class="aib-tag">Recul</span><span class="aib-tag">Action</span>
+            </div>
+          </div>
+          <p class="doc-cat">Cadre de référence</p>
+          <div class="doc-file" onclick="openDoc('GROW_Framework.pdf')">
+            <div class="doc-file-icon pdf">PDF</div>
+            <div><p class="doc-file-name">Cadre GROW IO — Modèle & approche</p><p class="doc-file-meta">Référentiel · 8 pages</p></div>
+          </div>
+          <div class="doc-file" onclick="openDoc('ICF_Standards.pdf')">
+            <div class="doc-file-icon pdf">PDF</div>
+            <div><p class="doc-file-name">Standards ICF appliqués</p><p class="doc-file-meta">Déontologie · 5 pages</p></div>
+          </div>
+          <div class="doc-divider"></div>
+          <p class="doc-cat">Articles associés</p>
+          <div class="doc-file" onclick="openDoc('art_grow')">
+            <div class="doc-file-icon art">ART</div>
+            <div><p class="doc-file-name">De la prise de conscience à l'action</p><p class="doc-file-meta">Article · 6 min</p></div>
+          </div>
+          <div class="doc-file" onclick="openDoc('art_inside_out')">
+            <div class="doc-file-icon art">ART</div>
+            <div><p class="doc-file-name">Inside Out — Le coaching par l'intérieur</p><p class="doc-file-meta">Article · 4 min</p></div>
+          </div>
+          <div class="doc-divider"></div>
+          <p class="doc-cat">Références</p>
+          <div class="doc-file" onclick="openDoc('ref_whitmore')">
+            <div class="doc-file-icon ref">REF</div>
+            <div><p class="doc-file-name">Whitmore — Coaching for Performance</p><p class="doc-file-meta">Bibliographie</p></div>
+          </div>
+          <div class="doc-file" onclick="openDoc('ref_icf')">
+            <div class="doc-file-icon ref">REF</div>
+            <div><p class="doc-file-name">ICF Core Competencies 2023</p><p class="doc-file-meta">Standards internationaux</p></div>
+          </div>
+        </div>
+        <!-- Placeholder docs for other agents -->
+        <div id="docs-soon" style="display:none">
+          <div class="agent-info-box" id="doc-agent-info">
+            <p class="aib-label">Agent spécialisé</p>
+            <p class="aib-name" id="doc-agent-name">Agent</p>
+            <p class="aib-text" id="doc-agent-text">Description de l'agent.</p>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;padding:2rem;text-align:center;">
+            <div style="font-size:1.8rem;opacity:.3">📄</div>
+            <p style="font-size:.78rem;color:var(--ink-4);line-height:1.6">La documentation de cet agent sera disponible lors de son lancement.</p>
+          </div>
+        </div>
+      </div>
+      <div class="doc-footer">
+        <p>Conformité ICF · Cadre éthique EGG<br>Posture non-directive sans jugement</p>
+      </div>
+    </aside>
+
+  </div>
+</div><!-- /agents -->
+
+<!-- ═══════════════════════════════
+     TAB 3 — PROFESSIONNELS
+═══════════════════════════════ -->
+<div class="tab-panel" id="panel-pro">
+  <div class="pro-page">
+
+    <!-- Pro Hero -->
+    <section class="pro-hero">
+      <div class="pro-hero-inner">
+        <div>
+          <p class="hero-eyebrow" style="color:var(--gold-3)"><span style="width:28px;height:1px;background:var(--gold-3);display:inline-block;margin-right:10px;vertical-align:middle"></span>Espace professionnels</p>
+          <h1>Intégrez EGG dans<br>votre <em>pratique</em>.</h1>
+          <p>EGG s'adresse aux coachs professionnels qui souhaitent enrichir leur accompagnement avec des outils IA éthiques, alignés ICF, et complémentaires à leur posture humaine.</p>
+          <div class="pro-acts">
+            <button class="btn-cta-inv" onclick="document.getElementById('qualify-form').scrollIntoView({behavior:'smooth'})">Prendre rendez-vous</button>
+            <a href="#pro-offre" class="btn-ghost-w">Découvrir l'offre</a>
+          </div>
+        </div>
+        <div class="pro-card">
+          <h3>La plateforme en chiffres</h3>
+          <div class="pro-stats">
+            <div class="pro-stat">
+              <p class="pro-stat-num">11</p>
+              <p class="pro-stat-label">Agents spécialisés</p>
+            </div>
+            <div class="pro-stat">
+              <p class="pro-stat-num">ICF</p>
+              <p class="pro-stat-label">Conformité éthique</p>
+            </div>
+            <div class="pro-stat">
+              <p class="pro-stat-num">24/7</p>
+              <p class="pro-stat-label">Accès utilisateur</p>
+            </div>
+            <div class="pro-stat">
+              <p class="pro-stat-num">IA</p>
+              <p class="pro-stat-label">Transparence totale</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Offre -->
+    <section class="pro-sections" id="pro-offre">
+      <p class="sec-eyebrow">Ce que propose EGG Pro</p>
+      <h2 class="sec-h2">Une offre pensée<br>pour les praticiens</h2>
+      <div class="pro-grid">
+        <div class="pro-block">
+          <div class="pro-block-icon">🤝</div>
+          <p class="pro-block-title">Complémentarité coach / IA</p>
+          <p class="pro-block-text">EGG ne remplace pas le coach humain. Il complète la relation en offrant un espace de travail entre les séances, accessible à tout moment par le coaché.</p>
+          <a href="#" class="pro-block-link">En savoir plus</a>
+        </div>
+        <div class="pro-block">
+          <div class="pro-block-icon">🧭</div>
+          <p class="pro-block-title">Catalogue d'agents spécialisés</p>
+          <p class="pro-block-text">11 agents thématiques couvrant les situations courantes : décision, expression, stabilisation, feedback, équipe. Chaque agent est documenté et référencé.</p>
+          <a href="#" onclick="showTab('agents');return false" class="pro-block-link">Voir les agents</a>
+        </div>
+        <div class="pro-block">
+          <div class="pro-block-icon">📐</div>
+          <p class="pro-block-title">Conformité ICF</p>
+          <p class="pro-block-text">Posture non-directive, absence de jugement, transparence IA, respect de la personne. Chaque agent s'inscrit dans les compétences ICF 2023.</p>
+          <a href="#" class="pro-block-link">Lire le cadre éthique</a>
+        </div>
+        <div class="pro-block">
+          <div class="pro-block-icon">📊</div>
+          <p class="pro-block-title">Tableau de bord praticien</p>
+          <p class="pro-block-text">Suivez l'engagement de vos coachés, les agents utilisés, la fréquence de connexion. Une vision agrégée, sans accès aux contenus privés des sessions.</p>
+          <a href="#" class="pro-block-link">Voir la démo</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Qualify -->
+    <section class="qualify-section" id="qualify-form">
+      <div class="qualify-inner">
+        <div>
+          <p class="sec-eyebrow" style="color:var(--gold-3)">Prise de contact</p>
+          <h2>Parlons de votre pratique.</h2>
+          <p>Un agent de qualification va analyser votre contexte et vous proposer les options les mieux adaptées à votre pratique professionnelle.</p>
+        </div>
+        <div class="qualify-form">
+          <h3>Qualification rapide</h3>
+          <div class="form-field">
+            <label>Prénom et nom</label>
+            <input type="text" placeholder="Votre nom">
+          </div>
+          <div class="form-field">
+            <label>Pratique</label>
+            <select>
+              <option value="">Votre contexte</option>
+              <option>Coach indépendant(e)</option>
+              <option>Coach en entreprise</option>
+              <option>Cabinet de coaching</option>
+              <option>RH / DRH</option>
+              <option>Autre praticien</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Ce que vous cherchez</label>
+            <textarea placeholder="En quelques mots, ce qui vous amène vers EGG..." rows="3"></textarea>
+          </div>
+          <button class="btn-form" onclick="alert('Merci — un coach EGG vous recontacte rapidement.')">Envoyer ma demande</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Coach as human -->
+    <section class="coach-section">
+      <div class="coach-inner">
+        <p class="sec-eyebrow">Réseau de coachs</p>
+        <h2 class="sec-h2">Rejoindre l'annuaire EGG</h2>
+        <p>Les coachs référencés dans l'annuaire EGG sont accessibles directement depuis la plateforme par les utilisateurs. Un accès humain, permanent, intégré.</p>
+        <div class="coach-cards">
+          <div class="coach-card">
+            <div class="coach-card-icon">✅</div>
+            <p class="coach-card-title">Certification ICF</p>
+            <p class="coach-card-text">ACC, PCC ou MCC requis pour intégrer l'annuaire.</p>
+          </div>
+          <div class="coach-card">
+            <div class="coach-card-icon">🌐</div>
+            <p class="coach-card-title">Profil visible</p>
+            <p class="coach-card-text">Spécialités, disponibilités, modalités de contact direct.</p>
+          </div>
+          <div class="coach-card">
+            <div class="coach-card-icon">🔗</div>
+            <p class="coach-card-title">Intégration EGG</p>
+            <p class="coach-card-text">Vos coachés accèdent à vos disponibilités depuis la plateforme.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="land-footer">
+      <div class="land-footer-bottom" style="border-top:1px solid rgba(255,255,255,.07);padding-top:1.5rem;margin-top:0">
+        <p class="lf-note">© 2026 EGG Platform — Espace professionnels</p>
+        <span class="icf-pill">Conforme ICF</span>
+      </div>
+    </footer>
+
+  </div>
+</div><!-- /pro -->
+
+<script>
+const GROW_URL = 'https://www.magif.ai/chat/69ba72de6d08412ae30cf491';
+
+/* ── TAB SWITCHING ── */
+function showTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  document.getElementById('tab-' + id).classList.add('active');
+}
+
+/* ── DOC PANEL TOGGLE ── */
+let docOpen = true;
+function toggleDoc() {
+  docOpen = !docOpen;
+  const ws = document.getElementById('workspace');
+  const btn = document.getElementById('btn-doc');
+  if (docOpen) {
+    ws.style.gridTemplateColumns = 'var(--sidebar-w) 1fr var(--doc-w)';
+    document.getElementById('doc-panel').style.display = 'flex';
+    btn.classList.add('active-btn');
+    btn.textContent = 'Docs ↗';
+  } else {
+    ws.style.gridTemplateColumns = 'var(--sidebar-w) 1fr 0';
+    document.getElementById('doc-panel').style.display = 'none';
+    btn.classList.remove('active-btn');
+    btn.textContent = 'Docs ↗';
+  }
+}
+
+/* ── AGENT SELECTION ── */
+const agentData = {
+  grow: {
+    icon:'🌱', name:'GROW IO — Grow Inside Out',
+    desc:'Agent de coaching réflexif généraliste · Point d\'entrée transversal',
+    active: true,
+    url: GROW_URL,
+    phText:'',
+    docAibName:'GROW IO', docAibText:'Coaching réflexif généraliste. Point d\'entrée transversal.'
+  },
+  comprendre:  {icon:'🧠',name:'Comprendre',desc:'confusion → compréhension',active:false,url:null,phText:'Vous traversez une situation confuse ou complexe et souhaitez y voir plus clair.',docAibName:'Comprendre',docAibText:'Clarifier une situation, identifier les structures de pensée et trouver du sens.'},
+  decider:     {icon:'🎯',name:'Décider',desc:'hésitation → décision',active:false,url:null,phText:'Vous faites face à un choix difficile et souhaitez sortir de l\'hésitation.',docAibName:'Décider',docAibText:'Explorer les options, identifier les critères de décision, choisir en conscience.'},
+  agir:        {icon:'🚀',name:'Passer à l\'action',desc:'intention → action',active:false,url:null,phText:'Vous savez quoi faire mais n\'arrivez pas à passer à l\'acte.',docAibName:'Passer à l\'action',docAibText:'Identifier les freins, construire les premiers pas, engager le mouvement.'},
+  dire:        {icon:'💬',name:'Dire',desc:'évitement → expression',active:false,url:null,phText:'Vous évitez de dire quelque chose d\'important et souhaitez trouver les mots.',docAibName:'Dire',docAibText:'Trouver les mots, formuler avec justesse, oser l\'expression.'},
+  feedback:    {icon:'🗣️',name:'Donner du feedback',desc:'critique → développement',active:false,url:null,phText:'Vous souhaitez donner un retour constructif qui aide vraiment.',docAibName:'Donner du feedback',docAibText:'Passer de la critique à un retour qui développe et fait grandir.'},
+  ecouter:     {icon:'👂',name:'Écouter',desc:'réaction → compréhension',active:false,url:null,phText:'Vous avez du mal à écouter sans réagir.',docAibName:'Écouter',docAibText:'Développer l\'écoute active, réduire les réactions automatiques.'},
+  ressentir:   {icon:'😵',name:'Ce que je ressens',desc:'flou → conscience émotionnelle',active:false,url:null,phText:'Vous ressentez quelque chose d\'intense sans savoir exactement quoi.',docAibName:'Ce que je ressens',docAibText:'Nommer les émotions, comprendre leur signal, gagner en conscience émotionnelle.'},
+  stabiliser:  {icon:'⚖️',name:'Me stabiliser',desc:'débordement → ajustement',active:false,url:null,phText:'Vous êtes submergé·e et souhaitez retrouver votre équilibre.',docAibName:'Me stabiliser',docAibText:'Retrouver l\'équilibre, sortir du débordement, ajuster sa posture.'},
+  place:       {icon:'🧭',name:'Prendre ma place',desc:'subir → incarner',active:false,url:null,phText:'Vous vous sentez en marge et souhaitez prendre pleinement votre place.',docAibName:'Prendre ma place',docAibText:'Incarner sa légitimité, affirmer sa présence, sortir du mode subi.'},
+  convaincre:  {icon:'🤝',name:'Convaincre',desc:'argumenter → convaincre',active:false,url:null,phText:'Vous avez du mal à emporter l\'adhésion.',docAibName:'Convaincre',docAibText:'Passer de l\'argumentation à la conviction, créer l\'adhésion.'},
+  equipe:      {icon:'👥',name:'Comprendre une équipe',desc:'individuel → collectif',active:false,url:null,phText:'Vous souhaitez comprendre les dynamiques de votre équipe dans leur ensemble.',docAibName:'Comprendre une équipe',docAibText:'Passer d\'une vision individuelle à une vision collective des dynamiques.'}
+};
+
+let currentAgent = 'grow';
+
+function selectAgent(id) {
+  if (currentAgent === id) return;
+  currentAgent = id;
+
+  document.querySelectorAll('.agent-item').forEach(el => el.classList.remove('active'));
+  document.getElementById('item-' + id).classList.add('active');
+
+  const a = agentData[id];
+  document.getElementById('chat-icon').textContent = a.icon;
+  document.getElementById('chat-name').textContent = a.name;
+  document.getElementById('chat-desc').textContent = a.desc;
+
+  // Chat area
+  const iframeWrap = document.getElementById('chat-grow');
+  const placeholder = document.getElementById('chat-placeholder');
+  const openBtn = document.getElementById('btn-open');
+
+  if (a.active && a.url) {
+    iframeWrap.style.display = 'block';
+    placeholder.style.display = 'none';
+    openBtn.href = a.url;
+    openBtn.style.display = 'flex';
+  } else {
+    iframeWrap.style.display = 'none';
+    placeholder.style.display = 'flex';
+    document.getElementById('ph-icon').textContent = a.icon;
+    document.getElementById('ph-name').textContent = a.name;
+    document.getElementById('ph-text').textContent = a.phText;
+    openBtn.style.display = 'none';
+  }
+
+  // Doc panel
+  const docsGrow = document.getElementById('docs-grow');
+  const docsSoon = document.getElementById('docs-soon');
+  if (id === 'grow') {
+    docsGrow.style.display = 'block';
+    docsSoon.style.display = 'none';
+  } else {
+    docsGrow.style.display = 'none';
+    docsSoon.style.display = 'block';
+    document.getElementById('doc-agent-name').textContent = a.docAibName;
+    document.getElementById('doc-agent-text').textContent = a.docAibText;
+  }
+}
+
+function openDoc(ref) {
+  alert('Document "' + ref + '" — fonctionnalité de consultation disponible dans la version complète.');
+}
+</script>
+</body>
+</html>
